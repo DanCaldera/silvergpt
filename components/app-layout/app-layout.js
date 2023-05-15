@@ -1,17 +1,25 @@
 import { useUser } from '@auth0/nextjs-auth0/client'
+import { faCoins } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import Logo from '../logo/logo'
 
 const AppLayout = ({ children }) => {
   const { user } = useUser()
   return (
     <div className='grid grid-cols-[300px,1fr] h-screen max-h-screen'>
-      <div className='flex flex-col text-white overflow-hidden bg-gray-800'>
-        <div>
-          <div>logo</div>
-          <div>cta button</div>
-          <div>tokens</div>
+      <div className='flex flex-col text-white overflow-hidden'>
+        <div className='px-2 bg-gray-800'>
+          <Logo />
+          <Link className='btn' href='/post/new'>
+            New Post
+          </Link>
+          <Link className='block mt-2 text-center' href='/token-topup'>
+            <FontAwesomeIcon icon={faCoins} className='text-yellow-400' />
+            <span className='pl-1'>0 tokens available</span>
+          </Link>
         </div>
 
         <div className='flex-1 overflow-auto bg-gradient-to-b from-gray-800 to-cyan-900'>list of posts</div>
