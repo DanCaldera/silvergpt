@@ -14,7 +14,11 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/font": "^13.4.1",
+    "@radix-ui/react-slot": "^1.0.1",
     "@webdeveducation/next-verify-stripe": "^1.0.1",
+    "class-variance-authority": "^0.6.0",
+    "clsx": "^1.2.1",
+    "lucide-react": "^0.220.0",
     "micro-cors": "^0.1.1",
     "mongodb": "^5.4.0",
     "next": "13.4.1",
@@ -22,7 +26,9 @@
     "openai": "^3.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "stripe": "^12.4.0"
+    "stripe": "^12.4.0",
+    "tailwind-merge": "^1.12.0",
+    "tailwindcss-animate": "^1.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
