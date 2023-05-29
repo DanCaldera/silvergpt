@@ -2,7 +2,7 @@ import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Example() {
+export default function IndexPage() {
   return (
     <div className='relative isolate overflow-hidden bg-white'>
       <svg
@@ -30,7 +30,7 @@ export default function Example() {
               </span>
             </a>
           </div>
-          <h1 className='mt-10 text-4xl font-bold tracking-tight text-neutral-900 sm:text-6xl'>Deploy to the cloud with confidence</h1>
+          <h1 className='mt-10 text-4xl font-bold tracking-tight text-neutral-900 sm:text-6xl'>Generate Blogs Automatically</h1>
           <p className='mt-6 text-lg leading-8 text-neutral-500'>
             Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
             fugiat aliqua.
@@ -51,7 +51,7 @@ export default function Example() {
           <div className='max-w-3xl flex-none sm:max-w-5xl lg:max-w-none'>
             <div className='-m-2 rounded-xl bg-neutral-900/5 p-2 ring-1 ring-inset ring-neutral-900/10 lg:-m-4 lg:rounded-2xl lg:p-4'>
               <Image
-                src='https://tailwindui.com/img/component-images/project-app-screenshot.png'
+                src='https://images.unsplash.com/photo-1566555318858-6a1368a2619e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
                 alt='App screenshot'
                 width={2432}
                 height={1442}
