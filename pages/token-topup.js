@@ -1,5 +1,5 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
-import AppLayout from '../components/app-layout/app-layout'
+import AppLayout from '../components/app-layout'
 
 export default function TokenTopUpPage() {
   return <div>TokenTopUpPage</div>
