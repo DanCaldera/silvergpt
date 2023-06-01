@@ -9,7 +9,7 @@ const AppLayout = ({ children }) => {
   const { user } = useUser()
   return (
     <div className='grid h-screen max-h-screen grid-cols-[300px,1fr]'>
-      <div className='flex flex-col overflow-hidden text-black'>
+      <div className='flex flex-col overflow-hidden border text-black shadow'>
         <div className='bg-neutral-100 px-2'>
           <Logo />
           <Link
