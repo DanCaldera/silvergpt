@@ -1,14 +1,16 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
+import { useState } from 'react'
 import AppLayout from '../../components/app-layout'
 
 export default function NewPostPage(props) {
-  console.log('props', props)
+  const [postContent, setPostContent] = useState('')
   const handleClick = async () => {
     const response = await fetch('/api/generatePost', {
       method: 'POST'
     })
     const data = await response.json()
     console.log('data', data)
+    setPostContent(data.post.postContent)
   }
 
   return (
@@ -17,6 +19,12 @@ export default function NewPostPage(props) {
       <button className='btn btn-primary' onClick={handleClick}>
         Generate
       </button>
+      <div
+        className='max-w-screen-sm p-10'
+        dangerouslySetInnerHTML={{
+          __html: postContent
+        }}
+      />
     </div>
   )
 }
