@@ -9,7 +9,6 @@ export default function NewPostPage(props) {
       method: 'POST'
     })
     const data = await response.json()
-    console.log('data', data)
     setPostContent(data.post.postContent)
   }
 

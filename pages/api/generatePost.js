@@ -12,10 +12,12 @@ export default async function handler(req, res) {
   const keywords =
     'first time dog owner, dog training, dog food, dog health, dog grooming, dog toys, dog bed, dog collar, dog leash, dog treats'
 
+  console.log('loading')
+
   const response = await openai.createCompletion({
     model: 'text-davinci-003',
     temperature: 0,
-    max_tokens: 64,
+    max_tokens: 3600,
     prompt: `Write a long and detailed SEO-friendly blog post about ${topic}, that targets the following comma-separated keywords: ${keywords}.
     The content should be formatted in SEO-friendly HTML.
     The response must also include appropriate HTML title and meta description content.
@@ -27,11 +29,11 @@ export default async function handler(req, res) {
     }`
   })
 
-  console.log('response.data', response.data)
+  // console.log('response.data', response.data.choices[0].text.replace(/\n/g, ''))
   // console.log('response', response)
-  console.log('choice', JSON.parse(response.data.choices[0].text.split('\n').join('')))
+  // console.log('choice', JSON.parse(response.data.choices[0].text.replace(/\n/g, '')))
 
   res.status(200).json({
-    post: 'response.data.choices[0].text'
+    post: JSON.parse(response.data.choices[0].text.replace(/\n/g, ''))
   })
 }
