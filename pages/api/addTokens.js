@@ -1,10 +1,10 @@
-import { getSession } from '@auth0/nextjs-auth0'
+import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
 import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
-export default async function handler(req, res) {
-  const { user } = getSession(req, res)
+async function handler(req, res) {
+  const { user } = await getSession(req, res)
   const lineItems = [
     {
       price: process.env.STRIPE_PRODUCT_PRICE_ID,
@@ -19,8 +19,8 @@ export default async function handler(req, res) {
     payment_method_types: ['card'],
     line_items: lineItems,
     mode: 'payment',
-    success_url: `${protocol}${host}/token-topup?success=true`,
-    cancel_url: `${protocol}${host}/token-topup?canceled=true`,
+    success_url: `${protocol}${host}/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${protocol}${host}/token-topup`,
     payment_intent_data: {
       metadata: {
         sub: user.sub
@@ -33,3 +33,5 @@ export default async function handler(req, res) {
 
   res.status(200).json({ session })
 }
+
+export default withApiAuthRequired(handler)

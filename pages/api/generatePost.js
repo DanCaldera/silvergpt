@@ -2,7 +2,7 @@ import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0'
 import { Configuration, OpenAIApi } from 'openai'
 import clientPromise from '../../lib/mongodb'
 
-export default withApiAuthRequired(async function handler(req, res) {
+async function handler(req, res) {
   try {
     const { user } = await getSession(req, res)
     const client = await clientPromise
@@ -145,4 +145,6 @@ export default withApiAuthRequired(async function handler(req, res) {
     console.error(error)
     res.status(500).json({ error: error.message })
   }
-})
+}
+
+export default withApiAuthRequired(handler)

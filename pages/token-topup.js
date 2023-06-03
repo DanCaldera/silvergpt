@@ -1,7 +1,6 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
+import { useState } from 'react'
 import { AppLayout } from '../components/app-layout'
 import { getAppProps } from '../utils/getAppProps'
 
@@ -16,22 +15,12 @@ export default function TokenTopUpPage(props) {
         method: 'POST'
       })
       const { session } = await response.json()
-      console.log(session)
-      window.location.href = session.url
+      router.push(session.url)
     } catch (error) {
       console.error(error)
     }
     setLoading(false)
   }
-
-  useEffect(() => {
-    if (router.query.success) {
-      toast.success('Tokens added successfully')
-    } else if (router.query.canceled) {
-      toast.error('Tokens not added')
-    }
-    router.push('/token-topup', undefined, { shallow: true })
-  }, [router])
 
   return (
     <div>
