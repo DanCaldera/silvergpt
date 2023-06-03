@@ -5,7 +5,7 @@ import React from 'react'
 import Logo from './logo'
 import { CircleStackIcon } from '@heroicons/react/20/solid'
 
-const AppLayout = ({ children }) => {
+export const AppLayout = ({ children }) => {
   const { user } = useUser()
   return (
     <div className='grid h-screen max-h-screen grid-cols-[300px,1fr]'>
@@ -24,12 +24,21 @@ const AppLayout = ({ children }) => {
               className='pl-1 hover:underline
             '
             >
-              0 tokens available
+              {children.props.tokens} tokens available
             </span>
           </Link>
         </div>
 
-        <div className='flex-1 overflow-auto bg-neutral-100'>list of posts</div>
+        <div className='flex-1 overflow-auto bg-neutral-100'>
+          <div className='p-2 text-sm text-neutral-500'>Posts</div>
+          {children.props?.posts?.map(post => (
+            <Link key={post._id} href={`/post/${post.id}`}>
+              <div className='cursor-pointer p-2 hover:bg-neutral-200'>
+                <div className='text-sm font-bold'>{post.title}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
         <div className='flex h-20 items-center gap-2 border-t border-t-black/10 bg-neutral-100 px-2'>
           {!!user ? (
             <>
@@ -52,5 +61,3 @@ const AppLayout = ({ children }) => {
     </div>
   )
 }
-
-export default AppLayout

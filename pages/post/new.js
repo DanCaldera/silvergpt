@@ -1,9 +1,11 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
 import { useState } from 'react'
-import AppLayout from '../../components/app-layout'
+import { AppLayout } from '../../components/app-layout'
 import { useRouter } from 'next/router'
+import { getAppProps } from '../../utils/getAppProps'
+import Loader from '../../components/loader'
 
-export default function NewPostPage() {
+export default function NewPostPage(props) {
   const router = useRouter()
   const [topic, settopic] = useState('')
   const [keywords, setKeywords] = useState('')
@@ -28,18 +30,7 @@ export default function NewPostPage() {
     }
   }
 
-  if (loading)
-    return (
-      <div className='flex animate-pulse space-x-4'>
-        <div className='flex-1 space-y-4 py-1'>
-          <div className='h-4 w-3/4 rounded bg-gray-400'></div>
-          <div className='space-y-2'>
-            <div className='h-4 rounded bg-gray-400'></div>
-            <div className='h-4 w-5/6 rounded bg-gray-400'></div>
-          </div>
-        </div>
-      </div>
-    )
+  if (loading) return <Loader />
 
   return (
     <div>
@@ -73,22 +64,18 @@ export default function NewPostPage() {
           Generate
         </button>
       </form>
-      {/* <div
-        className='max-w-screen-sm p-10'
-        dangerouslySetInnerHTML={{
-          __html: postContent
-        }}
-      /> */}
     </div>
   )
 }
 
-NewPostPage.getLayout = function getLayout(page, pageProps) {
-  return <AppLayout {...pageProps}>{page}</AppLayout>
+NewPostPage.getLayout = function getLayout(page, props) {
+  return <AppLayout {...props}>{page}</AppLayout>
 }
 
-export const getServerSideProps = withPageAuthRequired(() => {
-  return {
-    props: {}
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    return {
+      props: await getAppProps(context)
+    }
   }
 })

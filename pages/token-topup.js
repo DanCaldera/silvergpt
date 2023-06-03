@@ -1,12 +1,16 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
-import AppLayout from '../components/app-layout'
+import { AppLayout } from '../components/app-layout'
+import { getAppProps } from '../utils/getAppProps'
+import { useRouter } from 'next/router'
 
-export default function TokenTopUpPage() {
+export default function TokenTopUpPage(props) {
+  const router = useRouter()
   const handleClick = async () => {
     const response = await fetch('/api/addTokens', {
       method: 'POST'
     })
     console.log(response)
+    router.reload()
   }
   return (
     <div>
@@ -17,12 +21,14 @@ export default function TokenTopUpPage() {
   )
 }
 
-TokenTopUpPage.getLayout = function getLayout(page, pageProps) {
-  return <AppLayout {...pageProps}>{page}</AppLayout>
+TokenTopUpPage.getLayout = function getLayout(page, props) {
+  return <AppLayout {...props}>{page}</AppLayout>
 }
 
-export const getServerSideProps = withPageAuthRequired(() => {
-  return {
-    props: {}
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    return {
+      props: await getAppProps(context)
+    }
   }
 })
