@@ -16,7 +16,7 @@ export const AppLayout = ({ children }) => {
             className='flex items-center justify-center rounded-md border bg-neutral-500 p-2 text-white hover:bg-neutral-600'
             href='/post/new'
           >
-            <button>New Post</button>
+            <button>New Blog</button>
           </Link>
           <Link className='mt-2 flex items-center justify-center' href='/token-topup'>
             <CircleStackIcon className='w-4 text-yellow-400' />
