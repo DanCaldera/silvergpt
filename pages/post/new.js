@@ -1,9 +1,10 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0'
-import { useState } from 'react'
-import { AppLayout } from '../../components/app-layout'
 import { useRouter } from 'next/router'
-import { getAppProps } from '../../utils/getAppProps'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { AppLayout } from '../../components/app-layout'
 import Loader from '../../components/loader'
+import { getAppProps } from '../../utils/getAppProps'
 
 export default function NewPostPage(props) {
   const router = useRouter()
@@ -12,6 +13,9 @@ export default function NewPostPage(props) {
   const [loading, setLoading] = useState(false)
   const handleSubmit = async e => {
     e.preventDefault()
+
+    if (!topic || !keywords) return toast.error('Please fill out all fields')
+
     setLoading(true)
     const response = await fetch('/api/generatePost', {
       method: 'POST',
@@ -27,6 +31,10 @@ export default function NewPostPage(props) {
     const data = await response.json()
     if (data.postId) {
       router.push(`/post/${data.postId}`)
+    } else if (data.error) {
+      toast.error(data.error)
+    } else {
+      toast.error('Something went wrong')
     }
   }
 
@@ -34,23 +42,23 @@ export default function NewPostPage(props) {
 
   return (
     <div>
-      <form>
+      <form className='mx-auto flex max-w-7xl flex-col px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40'>
         <div className='flex flex-col'>
           <label>
             <strong>Generate a blog post on the topic of:</strong>
           </label>
           <textarea
             disabled={loading}
-            className='w-full resize-none rounded-md border p-2'
+            className='w-full resize-none rounded-md border p-2 ring-1 ring-neutral-900/10'
             value={topic}
             onChange={e => settopic(e.target.value)}
           />
         </div>
-        <div className='flex flex-col'>
+        <div className='mt-4 flex flex-col'>
           <strong>Targeting the following keywords:</strong>
           <textarea
             disabled={loading}
-            className='w-full resize-none rounded-md border p-2'
+            className='w-full resize-none rounded-md border p-2 ring-1 ring-neutral-900/10'
             value={keywords}
             onChange={e => setKeywords(e.target.value)}
           />

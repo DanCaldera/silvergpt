@@ -30,7 +30,7 @@ export const AppLayout = ({ children }) => {
         </div>
 
         <div className='flex-1 overflow-auto bg-neutral-100'>
-          <div className='p-2 text-sm text-neutral-500'>Posts</div>
+          <div className='p-2 text-sm text-neutral-500'>Blogs</div>
           {children.props?.posts?.map(post => (
             <Link key={post._id} href={`/post/${post.id}`}>
               <div className='cursor-pointer p-2 hover:bg-neutral-200'>

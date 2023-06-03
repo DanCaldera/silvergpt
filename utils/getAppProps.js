@@ -16,8 +16,6 @@ export const getAppProps = async context => {
     })
   }
 
-  console.log(userProfile)
-
   const posts = await db
     .collection('posts')
     .find({

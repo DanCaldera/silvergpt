@@ -41,6 +41,8 @@ export default withApiAuthRequired(async function handler(req, res) {
   //   }`
   // })
 
+  await db.collection('users').updateOne({ auth0Id: user.sub }, { $inc: { tokens: -1 } })
+
   const postContentResponse = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
     temperature: 0,
@@ -124,8 +126,6 @@ export default withApiAuthRequired(async function handler(req, res) {
   // res.status(200).json({
   //   post: JSON.parse(response.data.choices[0].text.replace(/\n/g, ''))
   // })
-
-  await db.collection('users').updateOne({ auth0Id: user.sub }, { $inc: { tokens: -1 } })
 
   const post = await db.collection('posts').insertOne({
     postContent,
