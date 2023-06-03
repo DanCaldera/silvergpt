@@ -31,7 +31,7 @@ export const AppLayout = ({ children }) => {
         </div>
 
         <div className='flex-1 overflow-auto'>
-          <div className='p-2 text-sm text-neutral-500'>Blogs</div>
+          <div className='text-s bg-neutral-100 p-2 text-neutral-500'>Blogs</div>
           {children.props?.posts?.map(post => (
             <Link key={post._id} href={`/post/${post.id}`}>
               <div
