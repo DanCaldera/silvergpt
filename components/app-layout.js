@@ -1,9 +1,10 @@
 import { useUser } from '@auth0/nextjs-auth0/client'
+import { CircleStackIcon } from '@heroicons/react/20/solid'
+import { clsx } from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import Logo from './logo'
-import { CircleStackIcon } from '@heroicons/react/20/solid'
 
 export const AppLayout = ({ children }) => {
   const { user } = useUser()
@@ -29,11 +30,16 @@ export const AppLayout = ({ children }) => {
           </Link>
         </div>
 
-        <div className='flex-1 overflow-auto bg-neutral-100'>
+        <div className='flex-1 overflow-auto'>
           <div className='p-2 text-sm text-neutral-500'>Blogs</div>
           {children.props?.posts?.map(post => (
             <Link key={post._id} href={`/post/${post.id}`}>
-              <div className='cursor-pointer p-2 hover:bg-neutral-200'>
+              <div
+                className={clsx(
+                  'cursor-pointer bg-neutral-100 p-2 hover:bg-neutral-200',
+                  children.props?.postId === post.id && 'bg-neutral-200'
+                )}
+              >
                 <div className='text-sm font-bold'>{post.title}</div>
               </div>
             </Link>
