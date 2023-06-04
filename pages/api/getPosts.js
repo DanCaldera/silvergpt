@@ -39,6 +39,7 @@ async function getPosts(req, res) {
     res.status(200).json({
       posts: posts.map(post => ({
         id: post._id.toString(),
+        createdAt: post.createdAt.toString(),
         title: post.title,
         metaDescription: post.metaDescription,
         keywords: post.keywords,

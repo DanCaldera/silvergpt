@@ -6,12 +6,31 @@ export default PostContext
 
 export const PostsProvider = ({ children }) => {
   const [posts, setPosts] = useState([])
+  const [showButton, setShowButton] = useState(true)
 
   const setPostsFromSSR = useCallback((postsFromSSR = []) => {
     setPosts(postsFromSSR)
   }, [])
 
-  console.log('posts', posts)
+  const getPosts = useCallback(async ({ lastPostDate }) => {
+    const response = await fetch('/api/getPosts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        lastPostDate
+      })
+    })
 
-  return <PostContext.Provider value={{ posts, setPostsFromSSR }}>{children}</PostContext.Provider>
+    const { posts: newPosts } = await response.json()
+
+    if (newPosts.length === 0) {
+      setShowButton(false)
+    }
+
+    setPosts((prevPosts = []) => [...prevPosts, ...newPosts])
+  }, [])
+
+  return <PostContext.Provider value={{ posts, setPostsFromSSR, getPosts }}>{children}</PostContext.Provider>
 }

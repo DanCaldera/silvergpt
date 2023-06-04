@@ -17,10 +17,10 @@ export function AppLayout({ children }) {
   const { user } = useUser()
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { setPostsFromSSR, posts } = useContext(PostsContext)
+  const { setPostsFromSSR, posts, getPosts } = useContext(PostsContext)
 
   useEffect(() => {
-    setPostsFromSSR(children.props.posts)
+    setPostsFromSSR(children?.props?.posts)
   }, [children?.props?.posts, setPostsFromSSR])
 
   return (
@@ -93,7 +93,7 @@ export function AppLayout({ children }) {
                       <div role='list' className='flex flex-1 flex-col gap-y-7'>
                         <div>
                           <div role='list' className='-mx-2 space-y-1'>
-                            {children.props?.posts?.map(post => (
+                            {posts.map(post => (
                               <div key={post._id}>
                                 <button
                                   onClick={() => {
@@ -111,6 +111,15 @@ export function AppLayout({ children }) {
                                 </button>
                               </div>
                             ))}
+                          </div>
+
+                          <div className='-mx-2 mt-4 flex flex-1 justify-center'>
+                            <button
+                              onClick={() => getPosts({ lastPostDate: posts[posts.length - 1]?.createdAt })}
+                              className='relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0'
+                            >
+                              Load more
+                            </button>
                           </div>
                         </div>
                         <div>
@@ -173,7 +182,7 @@ export function AppLayout({ children }) {
               <div role='list' className='flex flex-1 flex-col gap-y-7'>
                 <div>
                   <div role='list' className='-mx-2 space-y-1'>
-                    {children.props?.posts?.map(post => (
+                    {posts.map(post => (
                       <div key={post.name}>
                         <Link
                           href={`/post/${post.id}`}
@@ -189,19 +198,14 @@ export function AppLayout({ children }) {
                       </div>
                     ))}
                   </div>
-                  <div className='-mx-2 mt-4 flex flex-1 justify-end'>
-                    <a
-                      href='#'
-                      className='relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0'
-                    >
-                      Previous
-                    </a>
-                    <a
-                      href='#'
+
+                  <div className='-mx-2 mt-4 flex flex-1 justify-center'>
+                    <button
+                      onClick={() => getPosts({ lastPostDate: posts[posts.length - 1]?.createdAt })}
                       className='relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0'
                     >
-                      Next
-                    </a>
+                      Load more
+                    </button>
                   </div>
                 </div>
                 <div>

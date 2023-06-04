@@ -31,6 +31,7 @@ export const getAppProps = async context => {
     tokens: userProfile.tokens,
     posts: posts.map(post => ({
       id: post._id.toString(),
+      createdAt: post.createdAt.toString(),
       title: post.title,
       metaDescription: post.metaDescription,
       keywords: post.keywords,

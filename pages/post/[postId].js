@@ -9,6 +9,7 @@ export default function PostPage(props) {
   return (
     <div className='h-full overflow-auto'>
       <div className='mx-auto max-w-screen-sm px-4 py-8'>
+        <div className='mt-6 rounded-md bg-neutral-100 p-2 text-sm font-bold text-neutral-900'>Created: {props.createdAt}</div>
         <div className='mt-6 rounded-md bg-neutral-100 p-2 text-sm font-bold text-neutral-900'>SEO title and meta description</div>
         <div className='mt-6 rounded-md bg-neutral-100 p-2 text-sm font-bold text-neutral-900'>
           <div className='text-xl font-bold'>{props.title}</div>
@@ -68,6 +69,7 @@ export const getServerSideProps = withPageAuthRequired({
         metaDescription: post.metaDescription,
         keywords: post.keywords,
         postId: post._id.toString(),
+        createdAt: post.createdAt.toString(),
         ...appProps
       }
     }
