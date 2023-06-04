@@ -6,28 +6,27 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "stripe:listen": "stripe listen --forward-to=localhost:3000/api/webhooks/stripe --project-name=SilverBot"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^2.6.0",
     "@heroicons/react": "^2.0.18",
-    "@webdeveducation/next-verify-stripe": "^1.0.1",
-    "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
     "micro-cors": "^0.1.1",
-    "mongodb": "^5.5.0",
+    "mongodb": "^5.6.0",
     "next": "13.4.4",
     "numeral": "^2.0.6",
     "openai": "^3.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sonner": "^0.4.0",
-    "stripe": "^12.7.0",
-    "tailwind-merge": "^1.12.0"
+    "stripe": "^12.8.0",
+    "tailwind-merge": "^1.13.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
-    "eslint": "8.41.0",
+    "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "postcss": "^8.4.24",
     "prettier": "^2.8.8",

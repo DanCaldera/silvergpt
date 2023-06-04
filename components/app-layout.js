@@ -1,10 +1,10 @@
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { CircleStackIcon } from '@heroicons/react/20/solid'
-import { clsx } from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import Logo from './logo'
+import { cn } from '../lib/utils'
 
 export const AppLayout = ({ children }) => {
   const { user } = useUser()
@@ -35,7 +35,7 @@ export const AppLayout = ({ children }) => {
           {children.props?.posts?.map(post => (
             <Link key={post._id} href={`/post/${post.id}`}>
               <div
-                className={clsx(
+                className={cn(
                   'cursor-pointer bg-neutral-100 p-2 hover:bg-neutral-200',
                   children.props?.postId === post.id && 'bg-neutral-200'
                 )}
