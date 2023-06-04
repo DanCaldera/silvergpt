@@ -1,6 +1,6 @@
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { Dialog, Transition } from '@headlessui/react'
-import { Bars3Icon, CircleStackIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, CircleStackIcon, TrashIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -179,21 +179,21 @@ export function AppLayout({ children }) {
               </span>
             </Link>
             <nav className='flex flex-1 flex-col'>
-              <div role='list' className='flex flex-1 flex-col gap-y-7'>
+              <div className='flex flex-1 flex-col gap-y-7'>
                 <div>
                   <div role='list' className='-mx-2 space-y-1'>
                     {posts.map(post => (
-                      <div key={post.name}>
+                      <div key={post.name} className='flex w-full items-center justify-between'>
                         <Link
                           href={`/post/${post.id}`}
                           className={cn(
                             children.props?.postId === post.id
                               ? 'bg-neutral-100 text-neutral-600'
                               : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-600',
-                            'group flex gap-x-3 whitespace-nowrap rounded-md border p-2 text-sm font-semibold leading-6'
+                            'w-full gap-x-3 whitespace-nowrap rounded-md border p-2 text-sm font-semibold leading-6'
                           )}
                         >
-                          {post.title.slice(0, 30) + '...'}
+                          {post.title.slice(0, 25) + '...'}
                         </Link>
                       </div>
                     ))}
