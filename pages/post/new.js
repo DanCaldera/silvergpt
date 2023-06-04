@@ -42,36 +42,40 @@ export default function NewPostPage(props) {
 
   return (
     <div>
-      <form className='mx-auto flex max-w-7xl flex-col px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40'>
-        <div className='flex flex-col'>
-          <label>
-            <strong>Generate a blog post on the topic of:</strong>
-          </label>
-          <textarea
-            disabled={loading}
-            className='w-full resize-none rounded-md border p-2 ring-1 ring-neutral-900/10'
-            value={topic}
-            onChange={e => settopic(e.target.value)}
-          />
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+        <div className='mx-auto max-w-3xl'>
+          <form>
+            <div className='flex flex-col'>
+              <label>
+                <strong>Generate a blog post on the topic of:</strong>
+              </label>
+              <textarea
+                disabled={loading}
+                className='w-full resize-none rounded-md border p-2 ring-1 ring-neutral-900/10'
+                value={topic}
+                onChange={e => settopic(e.target.value)}
+              />
+            </div>
+            <div className='mt-4 flex flex-col'>
+              <strong>Targeting the following keywords:</strong>
+              <textarea
+                disabled={loading}
+                className='w-full resize-none rounded-md border p-2 ring-1 ring-neutral-900/10'
+                value={keywords}
+                onChange={e => setKeywords(e.target.value)}
+              />
+            </div>
+            <button
+              type='submit'
+              disabled={loading}
+              onClick={handleSubmit}
+              className='mt-4 w-full rounded bg-neutral-500 px-4 py-2 font-bold text-white hover:bg-neutral-600'
+            >
+              Generate
+            </button>
+          </form>
         </div>
-        <div className='mt-4 flex flex-col'>
-          <strong>Targeting the following keywords:</strong>
-          <textarea
-            disabled={loading}
-            className='w-full resize-none rounded-md border p-2 ring-1 ring-neutral-900/10'
-            value={keywords}
-            onChange={e => setKeywords(e.target.value)}
-          />
-        </div>
-        <button
-          type='submit'
-          disabled={loading}
-          onClick={handleSubmit}
-          className='mt-4 w-full rounded bg-neutral-500 px-4 py-2 font-bold text-white hover:bg-neutral-600'
-        >
-          Generate
-        </button>
-      </form>
+      </div>
     </div>
   )
 }
