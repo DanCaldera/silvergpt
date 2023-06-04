@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 const Meta = ({ title = '' }) => {
   const router = useRouter()
   const meta = {
-    title: title ? ` | ${title}` : 'Silverbot',
+    title: title ? ` | ${title}` : 'silverbot',
     description: 'AI powered blog generator'
     // cardImage: '/og.png'
   }

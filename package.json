@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^2.6.0",
+    "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
     "clsx": "^1.2.1",
     "micro-cors": "^0.1.1",

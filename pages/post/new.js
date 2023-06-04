@@ -64,6 +64,7 @@ export default function NewPostPage(props) {
                 value={keywords}
                 onChange={e => setKeywords(e.target.value)}
               />
+              <span className='text-sm text-neutral-500'>Separate keywords with commas</span>
             </div>
             <button
               type='submit'

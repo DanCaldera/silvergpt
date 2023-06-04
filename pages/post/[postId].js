@@ -9,22 +9,22 @@ export default function PostPage(props) {
   return (
     <div className='h-full overflow-auto'>
       <div className='mx-auto max-w-screen-sm px-4 py-8'>
-        <div className='mt-6 rounded-md bg-neutral-200 p-2 text-sm font-bold text-neutral-700'>SEO title and meta description</div>
-        <div className='mt-6 rounded-md bg-neutral-200 p-2 text-sm font-bold text-neutral-700'>
+        <div className='mt-6 rounded-md bg-neutral-100 p-2 text-sm font-bold text-neutral-900'>SEO title and meta description</div>
+        <div className='mt-6 rounded-md bg-neutral-100 p-2 text-sm font-bold text-neutral-900'>
           <div className='text-xl font-bold'>{props.title}</div>
           <div className='text-sm text-neutral-600'>{props.metaDescription}</div>
         </div>
-        <div className='mt-6 rounded-md bg-neutral-200 p-2 text-sm font-bold text-neutral-700'>Keywords</div>
+        <div className='mt-6 rounded-md bg-neutral-100 p-2 text-sm font-bold text-neutral-900'>Keywords</div>
         <div className='flex flex-wrap'>
           {props.keywords.split(',').map((keyword, index) => (
-            <div key={index} className='mr-2 mt-6 rounded-md bg-neutral-700 p-2 text-sm font-bold text-neutral-100'>
+            <div key={index} className='mr-2 mt-6 rounded-md bg-neutral-900 p-2 text-sm font-bold text-neutral-100'>
               <HashtagIcon className='mr-1 inline-block h-4 w-4' />
               {keyword}
             </div>
           ))}
         </div>
 
-        <div className='mt-6 rounded-md bg-neutral-200 p-2 text-sm font-bold text-neutral-700'>Blog Post</div>
+        <div className='mt-6 rounded-md bg-neutral-100 p-2 text-sm font-bold text-neutral-900'>Blog Post</div>
         <div
           className='mt-6 max-w-screen-sm'
           dangerouslySetInnerHTML={{
