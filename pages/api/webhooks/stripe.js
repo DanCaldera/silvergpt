@@ -1,5 +1,6 @@
 import micro_cors from 'micro-cors'
 import Stripe from 'stripe'
+import clientPromise from '../../../lib/mongodb'
 
 const cors = micro_cors({ allowMethods: ['POST', 'HEAD'] })
 
