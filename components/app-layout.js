@@ -4,7 +4,8 @@ import { Bars3Icon, CircleStackIcon, XMarkIcon } from '@heroicons/react/24/outli
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Fragment, useState } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
+import PostsContext from '../context/postsContext'
 import { cn } from '../utils/cn'
 
 const tools = [
@@ -16,6 +17,11 @@ export function AppLayout({ children }) {
   const { user } = useUser()
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { setPostsFromSSR, posts } = useContext(PostsContext)
+
+  useEffect(() => {
+    setPostsFromSSR(children.props.posts)
+  }, [children?.props?.posts, setPostsFromSSR])
 
   return (
     <div className='h-full'>
@@ -182,6 +188,20 @@ export function AppLayout({ children }) {
                         </Link>
                       </div>
                     ))}
+                  </div>
+                  <div className='-mx-2 mt-4 flex flex-1 justify-end'>
+                    <a
+                      href='#'
+                      className='relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0'
+                    >
+                      Previous
+                    </a>
+                    <a
+                      href='#'
+                      className='relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0'
+                    >
+                      Next
+                    </a>
                   </div>
                 </div>
                 <div>

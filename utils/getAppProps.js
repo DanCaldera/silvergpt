@@ -21,6 +21,7 @@ export const getAppProps = async context => {
     .find({
       userId: userProfile._id
     })
+    .limit(7)
     .sort({
       createdAt: -1
     })
