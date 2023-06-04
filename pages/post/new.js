@@ -87,8 +87,20 @@ NewPostPage.getLayout = function getLayout(page, props) {
 
 export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
+    const props = await getAppProps(context)
+
+    //? Handle redirection if user has no tokens, not sure if this is needed by ux
+    // if (!props.tokens) {
+    //   return {
+    //     redirect: {
+    //       destination: '/token-topup',
+    //       permanent: false
+    //     }
+    //   }
+    // }
+
     return {
-      props: await getAppProps(context)
+      props
     }
   }
 })

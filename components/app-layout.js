@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
-import { cn } from '../lib/utils'
+import { cn } from '../utils/cn'
 
 const tools = [
   { id: 1, name: 'blogs', href: '/post/new', initial: 'B', current: false },
@@ -62,10 +62,27 @@ export function AppLayout({ children }) {
                     </div>
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
-                  <div className='flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2'>
+                  <div className='flex grow flex-col gap-y-1 overflow-y-auto bg-white px-6 pb-2'>
                     <div className='flex h-16 shrink-0 items-center'>
                       <Image className='h-11 w-auto invert' width={118} height={46} src='/icon.svg' alt='Logo' />
+                      <span className='ml-1 text-xl'>silverbot</span>
                     </div>
+                    <button
+                      onClick={() => {
+                        router.push('/token-topup')
+                        setSidebarOpen(false)
+                      }}
+                      className='my-2 flex items-center justify-center'
+                      href='/token-topup'
+                    >
+                      <CircleStackIcon className='w-6 text-yellow-400 hover:text-yellow-500' />
+                      <span
+                        className='pl-1 hover:underline
+            '
+                      >
+                        {children.props.tokens} tokens available
+                      </span>
+                    </button>
                     <nav className='flex flex-1 flex-col'>
                       <div role='list' className='flex flex-1 flex-col gap-y-7'>
                         <div>
@@ -230,7 +247,7 @@ export function AppLayout({ children }) {
               <span className='sr-only'>Open sidebar</span>
               <Bars3Icon className='h-6 w-6' aria-hidden='true' />
             </button>
-            <div className='flex-1 text-sm font-semibold leading-6 text-neutral-900'>Blogs</div>
+            <div className='flex-1 text-sm font-semibold leading-6 text-neutral-900'></div>
             <Link href='/api/auth/logout'>
               <span className='sr-only'>Your profile</span>
               <Image className='h-8 w-8 rounded-full bg-neutral-100' src={user?.picture} alt={user?.name} width={100} height={100} />
