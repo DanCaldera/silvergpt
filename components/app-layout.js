@@ -18,7 +18,7 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
   const { user } = useUser()
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { setPostsFromSSR, posts: ssrPosts, getPosts, noMorePosts, setNoMorePosts } = useContext(PostsContext)
+  const { setPostsFromSSR, posts: ssrPosts, getPosts, noMorePosts, setNoMorePosts, deletePost } = useContext(PostsContext)
 
   useEffect(() => {
     setPostsFromSSR(posts)
@@ -33,22 +33,7 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
   const handleDeletePost = async postId => {
     const confirmed = confirm('Are you sure you want to delete this post?')
     if (!confirmed) return
-    const response = await fetch('/api/deletePost', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        postId
-      })
-    })
-    const { success, error } = await response.json()
-    if (success) {
-      toast.success('Post deleted successfully')
-      router.push('/post/new')
-    } else {
-      toast.error(error)
-    }
+    deletePost(postId)
   }
 
   return (

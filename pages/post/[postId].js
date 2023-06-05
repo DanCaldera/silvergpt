@@ -44,10 +44,12 @@ PostPage.getLayout = function getLayout(page) {
 export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
     const appProps = await getAppProps(context)
-    const { user } = await getSession(context.req, context.res)
+    const {
+      user: { sub }
+    } = await getSession(context.req, context.res)
     const client = await clientPromise
     const db = await client.db('silverbot')
-    const userProfile = await db.collection('users').findOne({ auth0Id: user.sub })
+    const userProfile = await db.collection('users').findOne({ auth0Id: sub })
     const post = await db.collection('posts').findOne({
       _id: new ObjectId(context.params.postId),
       userId: userProfile?._id
