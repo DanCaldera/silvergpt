@@ -1,15 +1,31 @@
-import React, { createContext, useCallback, useState } from 'react'
+import React, { createContext, useCallback, useReducer, useState } from 'react'
 
 const PostContext = createContext({})
 
 export default PostContext
 
+const postsReducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_POSTS':
+      const newPosts = [...state]
+      action.posts.forEach(post => {
+        const exists = newPosts.find(({ id }) => id === post.id)
+        if (!exists) {
+          newPosts.push(post)
+        }
+      })
+      return newPosts
+    default:
+      return state
+  }
+}
+
 export const PostsProvider = ({ children }) => {
-  const [posts, setPosts] = useState([])
+  const [posts, dispatch] = useReducer(postsReducer, [])
   const [noMorePosts, setNoMorePosts] = useState(false)
 
   const setPostsFromSSR = useCallback((postsFromSSR = []) => {
-    setPosts(postsFromSSR)
+    dispatch({ type: 'ADD_POSTS', posts: postsFromSSR })
   }, [])
 
   const getPosts = useCallback(async ({ lastPostDate, getNewerPosts = false }) => {
@@ -31,16 +47,7 @@ export const PostsProvider = ({ children }) => {
       return
     }
 
-    setPosts(prevPosts => {
-      const newPosts = [...prevPosts]
-      postsResult.forEach(post => {
-        const exists = newPosts.find(({ id }) => id === post.id)
-        if (!exists) {
-          newPosts.push(post)
-        }
-      })
-      return newPosts
-    })
+    dispatch({ type: 'ADD_POSTS', posts: postsResult })
   }, [])
 
   return <PostContext.Provider value={{ posts, setPostsFromSSR, getPosts, noMorePosts, setNoMorePosts }}>{children}</PostContext.Provider>
