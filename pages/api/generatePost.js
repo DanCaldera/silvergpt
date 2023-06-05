@@ -9,7 +9,7 @@ async function handler(req, res) {
     const db = await client.db('silverbot')
     const userProfile = await db.collection('users').findOne({ auth0Id: user.sub })
 
-    if (!userProfile.tokens || userProfile.tokens < 1) {
+    if (!userProfile?.tokens || userProfile?.tokens < 1) {
       res.status(403).json({ error: 'Not enough tokens' })
       return
     }
@@ -134,7 +134,7 @@ async function handler(req, res) {
       metaDescription,
       topic,
       keywords,
-      userId: userProfile._id,
+      userId: userProfile?._id,
       createdAt: new Date()
     })
 

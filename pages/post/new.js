@@ -81,8 +81,8 @@ export default function NewPostPage(props) {
   )
 }
 
-NewPostPage.getLayout = function getLayout(page, props) {
-  return <AppLayout {...props}>{page}</AppLayout>
+NewPostPage.getLayout = function getLayout(page) {
+  return <AppLayout {...page.props}>{page}</AppLayout>
 }
 
 export const getServerSideProps = withPageAuthRequired({

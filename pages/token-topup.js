@@ -44,8 +44,8 @@ export default function TokenTopUpPage(props) {
   )
 }
 
-TokenTopUpPage.getLayout = function getLayout(page, props) {
-  return <AppLayout {...props}>{page}</AppLayout>
+TokenTopUpPage.getLayout = function getLayout(page) {
+  return <AppLayout {...page.props}>{page}</AppLayout>
 }
 
 export const getServerSideProps = withPageAuthRequired({

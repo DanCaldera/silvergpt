@@ -7,21 +7,49 @@ import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect, useState } from 'react'
 import PostsContext from '../context/postsContext'
 import { cn } from '../utils/cn'
+import { toast } from 'sonner'
 
 const tools = [
   { id: 1, name: 'blogs', href: '/post/new', initial: 'B', current: false },
   { id: 2, name: 'components', href: '/component/new', initial: 'C', current: false }
 ]
 
-export function AppLayout({ children }) {
+export function AppLayout({ children, tokens, postId, createdAt, posts }) {
   const { user } = useUser()
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { setPostsFromSSR, posts, getPosts } = useContext(PostsContext)
+  const { setPostsFromSSR, posts: ssrPosts, getPosts, noMorePosts, setNoMorePosts } = useContext(PostsContext)
 
   useEffect(() => {
-    setPostsFromSSR(children?.props?.posts)
-  }, [children?.props?.posts, setPostsFromSSR])
+    setPostsFromSSR(posts)
+    if (posts.length === 0) {
+      getPosts({})
+    }
+    if (postId) {
+      getPosts({ lastPostDate: createdAt, getNewerPosts: true })
+    }
+  }, [posts, setPostsFromSSR, postId, getPosts, createdAt])
+
+  const handleDeletePost = async postId => {
+    const confirmed = confirm('Are you sure you want to delete this post?')
+    if (!confirmed) return
+    const response = await fetch('/api/deletePost', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        postId
+      })
+    })
+    const { success, error } = await response.json()
+    if (success) {
+      toast.success('Post deleted successfully')
+      router.push('/post/new')
+    } else {
+      toast.error(error)
+    }
+  }
 
   return (
     <div className='h-full'>
@@ -86,41 +114,48 @@ export function AppLayout({ children }) {
                         className='pl-1 hover:underline
             '
                       >
-                        {children.props.tokens} tokens available
+                        {tokens} tokens available
                       </span>
                     </button>
                     <nav className='flex flex-1 flex-col'>
                       <div role='list' className='flex flex-1 flex-col gap-y-7'>
                         <div>
                           <div role='list' className='-mx-2 space-y-1'>
-                            {posts.map(post => (
-                              <div key={post._id}>
+                            {ssrPosts.map(post => (
+                              <div key={post._id} className='flex items-center justify-between'>
                                 <button
                                   onClick={() => {
-                                    router.push(`/post/${post.id}`)
+                                    setNoMorePosts(false)
                                     setSidebarOpen(false)
+                                    router.push(`/post/${post.id}`)
                                   }}
                                   className={cn(
-                                    children.props?.postId === post.id
+                                    postId === post.id
                                       ? 'bg-neutral-100 text-neutral-600'
                                       : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-600',
                                     'group flex w-full gap-x-3 whitespace-nowrap rounded-md border p-2 text-sm font-semibold leading-6'
                                   )}
                                 >
-                                  {post.title.slice(0, 30) + '...'}
+                                  {post.title.slice(0, 25) + '...'}
                                 </button>
+                                <TrashIcon
+                                  onClick={() => handleDeletePost(post.id)}
+                                  className='ml-2 h-5 w-5 cursor-pointer text-neutral-400 hover:text-neutral-600'
+                                />
                               </div>
                             ))}
                           </div>
 
-                          <div className='-mx-2 mt-4 flex flex-1 justify-center'>
-                            <button
-                              onClick={() => getPosts({ lastPostDate: posts[posts.length - 1]?.createdAt })}
-                              className='relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0'
-                            >
-                              Load more
-                            </button>
-                          </div>
+                          {!noMorePosts && (
+                            <div className='-mx-2 mt-4 flex flex-1 justify-center'>
+                              <button
+                                onClick={() => getPosts({ lastPostDate: ssrPosts[ssrPosts.length - 1]?.createdAt })}
+                                className='relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0'
+                              >
+                                Load more
+                              </button>
+                            </div>
+                          )}
                         </div>
                         <div>
                           <div className='text-xs font-semibold leading-6 text-neutral-400'>Tools</div>
@@ -175,38 +210,48 @@ export function AppLayout({ children }) {
                 className='pl-1 hover:underline
             '
               >
-                {children.props.tokens} tokens available
+                {tokens} tokens available
               </span>
             </Link>
             <nav className='flex flex-1 flex-col'>
               <div className='flex flex-1 flex-col gap-y-7'>
                 <div>
                   <div role='list' className='-mx-2 space-y-1'>
-                    {posts.map(post => (
+                    {ssrPosts.map(post => (
                       <div key={post.name} className='flex w-full items-center justify-between'>
-                        <Link
+                        <button
+                          onClick={() => {
+                            setNoMorePosts(false)
+                            router.push(`/post/${post.id}`)
+                          }}
                           href={`/post/${post.id}`}
                           className={cn(
-                            children.props?.postId === post.id
+                            postId === post.id
                               ? 'bg-neutral-100 text-neutral-600'
                               : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-600',
-                            'w-full gap-x-3 whitespace-nowrap rounded-md border p-2 text-sm font-semibold leading-6'
+                            'w-full whitespace-nowrap rounded-md border p-2 text-left text-sm font-semibold leading-6'
                           )}
                         >
                           {post.title.slice(0, 25) + '...'}
-                        </Link>
+                        </button>
+                        <TrashIcon
+                          onClick={() => handleDeletePost(post.id)}
+                          className='ml-2 h-5 w-5 cursor-pointer text-neutral-400 hover:text-neutral-600'
+                        />
                       </div>
                     ))}
                   </div>
 
-                  <div className='-mx-2 mt-4 flex flex-1 justify-center'>
-                    <button
-                      onClick={() => getPosts({ lastPostDate: posts[posts.length - 1]?.createdAt })}
-                      className='relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0'
-                    >
-                      Load more
-                    </button>
-                  </div>
+                  {!noMorePosts && (
+                    <div className='-mx-2 mt-4 flex flex-1 justify-center'>
+                      <button
+                        onClick={() => getPosts({ lastPostDate: ssrPosts[ssrPosts.length - 1]?.createdAt })}
+                        className='relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0'
+                      >
+                        Load more
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div>
                   <div className='text-xs font-semibold leading-6 text-neutral-400'>Tools</div>

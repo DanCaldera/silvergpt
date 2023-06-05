@@ -19,16 +19,16 @@ export const getAppProps = async context => {
   const posts = await db
     .collection('posts')
     .find({
-      userId: userProfile._id
+      userId: userProfile?._id
     })
-    .limit(7)
+    .limit(5)
     .sort({
       createdAt: -1
     })
     .toArray()
 
   return {
-    tokens: userProfile.tokens,
+    tokens: userProfile?.tokens || 0,
     posts: posts.map(post => ({
       id: post._id.toString(),
       createdAt: post.createdAt.toString(),

@@ -37,8 +37,8 @@ export default function PostPage(props) {
   )
 }
 
-PostPage.getLayout = function getLayout(page, props) {
-  return <AppLayout {...props}>{page}</AppLayout>
+PostPage.getLayout = function getLayout(page) {
+  return <AppLayout {...page.props}>{page}</AppLayout>
 }
 
 export const getServerSideProps = withPageAuthRequired({
@@ -50,7 +50,7 @@ export const getServerSideProps = withPageAuthRequired({
     const userProfile = await db.collection('users').findOne({ auth0Id: user.sub })
     const post = await db.collection('posts').findOne({
       _id: new ObjectId(context.params.postId),
-      userId: userProfile._id
+      userId: userProfile?._id
     })
 
     if (!post) {

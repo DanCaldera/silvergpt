@@ -6,31 +6,42 @@ export default PostContext
 
 export const PostsProvider = ({ children }) => {
   const [posts, setPosts] = useState([])
-  const [showButton, setShowButton] = useState(true)
+  const [noMorePosts, setNoMorePosts] = useState(false)
 
   const setPostsFromSSR = useCallback((postsFromSSR = []) => {
     setPosts(postsFromSSR)
   }, [])
 
-  const getPosts = useCallback(async ({ lastPostDate }) => {
+  const getPosts = useCallback(async ({ lastPostDate, getNewerPosts = false }) => {
     const response = await fetch('/api/getPosts', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        lastPostDate
+        lastPostDate,
+        getNewerPosts
       })
     })
 
-    const { posts: newPosts } = await response.json()
+    const { posts: postsResult } = await response.json()
 
-    if (newPosts.length === 0) {
-      setShowButton(false)
+    if (postsResult.length === 0) {
+      setNoMorePosts(true)
+      return
     }
 
-    setPosts((prevPosts = []) => [...prevPosts, ...newPosts])
+    setPosts(prevPosts => {
+      const newPosts = [...prevPosts]
+      postsResult.forEach(post => {
+        const exists = newPosts.find(({ id }) => id === post.id)
+        if (!exists) {
+          newPosts.push(post)
+        }
+      })
+      return newPosts
+    })
   }, [])
 
-  return <PostContext.Provider value={{ posts, setPostsFromSSR, getPosts }}>{children}</PostContext.Provider>
+  return <PostContext.Provider value={{ posts, setPostsFromSSR, getPosts, noMorePosts, setNoMorePosts }}>{children}</PostContext.Provider>
 }
