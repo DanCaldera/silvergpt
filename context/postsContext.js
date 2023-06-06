@@ -15,6 +15,8 @@ const postsReducer = (state, action) => {
         }
       })
       return newPosts
+    case 'DELETE_POST':
+      return state.filter(({ id }) => id !== action.postId)
     default:
       return state
   }
@@ -26,6 +28,24 @@ export const PostsProvider = ({ children }) => {
 
   const setPostsFromSSR = useCallback((postsFromSSR = []) => {
     dispatch({ type: 'ADD_POSTS', posts: postsFromSSR })
+  }, [])
+
+  const deletePost = useCallback(async postId => {
+    const response = await fetch('/api/deletePost', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        postId
+      })
+    })
+
+    const { success } = await response.json()
+
+    if (success) {
+      dispatch({ type: 'DELETE_POST', postId })
+    }
   }, [])
 
   const getPosts = useCallback(async ({ lastPostDate, getNewerPosts = false }) => {
@@ -50,5 +70,9 @@ export const PostsProvider = ({ children }) => {
     dispatch({ type: 'ADD_POSTS', posts: postsResult })
   }, [])
 
-  return <PostContext.Provider value={{ posts, setPostsFromSSR, getPosts, noMorePosts, setNoMorePosts }}>{children}</PostContext.Provider>
+  return (
+    <PostContext.Provider value={{ posts, setPostsFromSSR, getPosts, noMorePosts, setNoMorePosts, deletePost }}>
+      {children}
+    </PostContext.Provider>
+  )
 }
