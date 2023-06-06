@@ -7,11 +7,9 @@ import { useRouter } from 'next/router'
 import { Fragment, useContext, useEffect, useState } from 'react'
 import PostsContext from '../context/postsContext'
 import { cn } from '../utils/cn'
-import { toast } from 'sonner'
 
 const tools = [
   { id: 1, name: 'blogs', href: '/post/new', initial: 'B', current: false },
-  { id: 2, name: 'components', href: '/component/new', initial: 'C', current: false }
 ]
 
 export function AppLayout({ children, tokens, postId, createdAt, posts }) {
