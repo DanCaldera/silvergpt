@@ -15,8 +15,8 @@ async function getPosts(req, res) {
 
     if (!userProfile) {
       await db.collection('users').insertOne({
-        tokens: 0,
-        posts: []
+        auth0Id: sub,
+        tokens: 0
       })
     }
 

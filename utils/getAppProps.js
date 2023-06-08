@@ -2,17 +2,19 @@ import { getSession } from '@auth0/nextjs-auth0'
 import clientPromise from '../lib/mongodb'
 
 export const getAppProps = async context => {
-  const { user } = await getSession(context.req, context.res)
+  const {
+    user: { sub }
+  } = await getSession(context.req, context.res)
   const client = await clientPromise
   const db = await client.db('silverbot')
   const userProfile = await db.collection('users').findOne({
-    auth0Id: user.sub
+    auth0Id: sub
   })
 
   if (!userProfile) {
     await db.collection('users').insertOne({
-      tokens: 0,
-      posts: []
+      auth0Id: sub,
+      tokens: 0
     })
   }
 
