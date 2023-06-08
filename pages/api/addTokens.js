@@ -12,15 +12,14 @@ async function handler(req, res) {
     }
   ]
 
-  const protocol = process.env.NODE_ENV === 'production' ? 'https://' : 'http://'
-  const host = req.headers.host
+  const url = process.env.AUTH0_BASE_URL
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: lineItems,
     mode: 'payment',
-    success_url: `${protocol}${host}/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${protocol}${host}/token-topup`,
+    success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${url}/token-topup`,
     payment_intent_data: {
       metadata: {
         sub: user.sub
