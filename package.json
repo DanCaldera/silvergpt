@@ -10,7 +10,7 @@
     "stripe:listen": "stripe listen --forward-to=localhost:3000/api/webhooks/stripe --project-name=SilverBot"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^2.6.0",
+    "@auth0/nextjs-auth0": "^2.6.1",
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
     "clsx": "^1.2.1",
@@ -23,7 +23,7 @@
     "react-dom": "18.2.0",
     "sonner": "^0.4.0",
     "stripe": "^12.8.0",
-    "tailwind-merge": "^1.13.0"
+    "tailwind-merge": "^1.13.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
