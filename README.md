@@ -1,4 +1,5 @@
-# GPT-3 Blog Post Generator
+# Open Source GPT-3 Blog Post Generator
+
 ## Description
 
 This is a simple blog post generator using OpenAI's GPT-3 API.
