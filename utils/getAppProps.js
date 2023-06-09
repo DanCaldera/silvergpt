@@ -14,7 +14,7 @@ export const getAppProps = async context => {
   if (!userProfile) {
     await db.collection('users').insertOne({
       auth0Id: sub,
-      tokens: 0
+      tokens: 10
     })
   }
 
