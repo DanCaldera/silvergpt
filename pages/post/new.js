@@ -74,6 +74,9 @@ export default function NewPostPage(props) {
             >
               Generate
             </button>
+            <p className='mt-2 text-center text-sm text-neutral-500'>
+              This will cost you <strong>1 token</strong>
+            </p>
           </form>
         </div>
       </div>
