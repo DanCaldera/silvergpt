@@ -42,8 +42,6 @@ async function handler(req, res) {
 
     const formatContent = formatContentResponse.data.choices[0]?.message?.content || ''
 
-    console.log(formatContent)
-
     const format = await db.collection('formats').insertOne({
       formatContent,
       instruction,
