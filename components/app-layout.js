@@ -10,6 +10,7 @@ import { cn } from '../utils/cn'
 
 const tools = [
   { id: 1, name: 'blogs', href: '/post/new', initial: 'B', current: false },
+  { id: 2, name: 'formatter', href: '/format/new', initial: 'F', current: false }
 ]
 
 export function AppLayout({ children, tokens, postId, createdAt, posts }) {
