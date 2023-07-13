@@ -51,6 +51,7 @@ export default function NewPostPage(props) {
               </label>
               <textarea
                 disabled={loading}
+                rows={10}
                 className='w-full resize-none rounded-md border p-2 ring-1 ring-neutral-900/10'
                 value={topic}
                 onChange={e => settopic(e.target.value)}
@@ -60,6 +61,7 @@ export default function NewPostPage(props) {
               <strong>Targeting the following keywords:</strong>
               <textarea
                 disabled={loading}
+                rows={10}
                 className='w-full resize-none rounded-md border p-2 ring-1 ring-neutral-900/10'
                 value={keywords}
                 onChange={e => setKeywords(e.target.value)}

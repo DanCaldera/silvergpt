@@ -83,7 +83,7 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
                   <div className='flex grow flex-col gap-y-1 overflow-y-auto bg-white px-6 pb-2'>
                     <div className='flex h-16 shrink-0 items-center'>
                       <Image className='h-11 w-auto invert' width={118} height={46} src='/icon.svg' alt='Logo' />
-                      <span className='ml-1 text-xl'>silverbot</span>
+                      <span className='ml-1 text-xl'>silverbot ai</span>
                     </div>
                     <button
                       onClick={() => {
@@ -104,7 +104,8 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
                     <nav className='flex flex-1 flex-col'>
                       <div role='list' className='flex flex-1 flex-col gap-y-7'>
                         <div>
-                          <div role='list' className='-mx-2 space-y-1'>
+                          {/* //! CAUTION Disabled show blogs until ready ux */}
+                          {/* <div role='list' className='-mx-2 space-y-1'>
                             {ssrPosts.map(post => (
                               <div key={post._id} className='flex items-center justify-between'>
                                 <button
@@ -128,9 +129,9 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
                                 />
                               </div>
                             ))}
-                          </div>
+                          </div> */}
 
-                          {!noMorePosts && (
+                          {/* {!noMorePosts && (
                             <div className='-mx-2 mt-4 flex flex-1 justify-center'>
                               <button
                                 onClick={() => getPosts({ lastPostDate: ssrPosts[ssrPosts.length - 1]?.createdAt })}
@@ -139,7 +140,7 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
                                 Load more
                               </button>
                             </div>
-                          )}
+                          )} */}
                         </div>
                         <div>
                           <div className='text-xs font-semibold leading-6 text-neutral-400'>Tools</div>
@@ -186,7 +187,7 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
           <div className='flex grow flex-col gap-y-1 overflow-y-auto border-r border-neutral-200 bg-white px-6'>
             <div className='flex h-16 shrink-0 items-center'>
               <Image className='h-11 w-auto invert' width={118} height={46} src='/icon.svg' alt='Logo' />
-              <span className='ml-1 text-xl'>silverbot</span>
+              <span className='ml-1 text-xl'>silverbot ai</span>
             </div>
             <Link className='my-2 flex items-center justify-center' href='/token-topup'>
               <CircleStackIcon className='w-6 text-yellow-400 hover:text-yellow-500' />
@@ -200,7 +201,8 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
             <nav className='flex flex-1 flex-col'>
               <div className='flex flex-1 flex-col gap-y-7'>
                 <div>
-                  <div role='list' className='-mx-2 space-y-1'>
+                  {/* //! CAUTION Disabled show blogs until ready ux */}
+                  {/* <div role='list' className='-mx-2 space-y-1'>
                     {ssrPosts.map(post => (
                       <div key={post.name} className='flex w-full items-center justify-between'>
                         <button
@@ -224,9 +226,9 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
                         />
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
-                  {!noMorePosts && (
+                  {/* {!noMorePosts && (
                     <div className='-mx-2 mt-4 flex flex-1 justify-center'>
                       <button
                         onClick={() => getPosts({ lastPostDate: ssrPosts[ssrPosts.length - 1]?.createdAt })}
@@ -235,7 +237,7 @@ export function AppLayout({ children, tokens, postId, createdAt, posts }) {
                         Load more
                       </button>
                     </div>
-                  )}
+                  )} */}
                 </div>
                 <div>
                   <div className='text-xs font-semibold leading-6 text-neutral-400'>Tools</div>

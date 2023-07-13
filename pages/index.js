@@ -18,7 +18,7 @@ export default function IndexPage() {
       <div className='mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40'>
         <div className='mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8'>
           <Image className='h-11 invert' width={118} height={46} src='/icon.svg' alt='Your Company' />
-          <h1 className='mt-10 text-4xl font-bold tracking-tight text-neutral-900 sm:text-6xl'>Generate Blogs Automatically</h1>
+          <h1 className='mt-10 text-4xl font-bold tracking-tight text-neutral-900 sm:text-6xl'>AI Utilities</h1>
           <p className='mt-6 text-lg leading-8 text-neutral-500'>
             Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
             fugiat aliqua.
